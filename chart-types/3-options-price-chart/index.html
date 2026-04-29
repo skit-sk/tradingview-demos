@@ -34,7 +34,8 @@
                 background: { type: 'solid', color: '#ffffff' },
                 textColor: '#333333',
             },
-            width: document.getElementById('container').clientWidth,
+            autoSize: true,
+            width: 800,
             height: 400,
         };
 
@@ -56,10 +57,6 @@
 
         lineSeries.setData(data);
         chart.timeScale().fitContent();
-
-        window.addEventListener('resize', () => {
-            chart.applyOptions({ width: document.getElementById('container').clientWidth });
-        });
     </script>
 </body>
 </html>

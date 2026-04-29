@@ -45,7 +45,8 @@
 
         const chart = createChart(document.getElementById('container'), {
             layout: { background: { type: 'solid', color: '#fff' }, textColor: '#333' },
-            width: document.getElementById('container').clientWidth,
+            autoSize: true,
+            width: 800,
             height: 400,
         });
 
@@ -56,10 +57,6 @@
 
         series.setData(generateBarData(100));
         chart.timeScale().fitContent();
-
-        window.addEventListener('resize', () => {
-            chart.applyOptions({ width: document.getElementById('container').clientWidth });
-        });
     </script>
 </body>
 </html>

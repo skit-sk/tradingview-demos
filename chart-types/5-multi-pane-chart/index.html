@@ -53,7 +53,8 @@
                 textColor: '#333333',
             },
             addDefaultPane: false,
-            width: document.getElementById('container').clientWidth,
+            autoSize: true,
+            width: 800,
             height: 500,
         };
 
@@ -83,10 +84,6 @@
         volumeSeries.setData(volumeData);
 
         chart.timeScale().fitContent();
-
-        window.addEventListener('resize', () => {
-            chart.applyOptions({ width: document.getElementById('container').clientWidth });
-        });
     </script>
 </body>
 </html>

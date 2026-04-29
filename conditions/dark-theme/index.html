@@ -54,7 +54,8 @@
                 vertLine: { color: '#787b86', labelBackgroundColor: '#2962ff' },
                 horzLine: { color: '#787b86', labelBackgroundColor: '#2962ff' },
             },
-            width: document.getElementById('container').clientWidth,
+            autoSize: true,
+            width: 800,
             height: 400,
         });
 
@@ -66,10 +67,6 @@
 
         areaSeries.setData(generateData(100));
         chart.timeScale().fitContent();
-
-        window.addEventListener('resize', () => {
-            chart.applyOptions({ width: document.getElementById('container').clientWidth });
-        });
     </script>
 </body>
 </html>
