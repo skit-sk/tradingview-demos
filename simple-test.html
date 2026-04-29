@@ -2,86 +2,57 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Simple Chart Test</title>
+    <title>Library Test</title>
     <style>
         body { background: #131722; margin: 0; padding: 20px; font-family: sans-serif; color: #fff; }
-        #chart { width: 800px; height: 400px; background: #1e222d; position: relative; }
-        .marker { position: absolute; padding: 5px 10px; background: #2962ff; color: #fff; font-size: 12px; z-index: 100; }
-        #log { margin-top: 20px; color: #ef5350; white-space: pre-wrap; font-size: 12px; max-height: 200px; overflow-y: auto; }
+        #chart { width: 800px; height: 400px; background: #1e222d; }
+        #log { margin-top: 20px; color: #0f0; white-space: pre-wrap; font-size: 12px; }
     </style>
 </head>
 <body>
-    <h1>Simple Test - Local Library</h1>
-
-    <div id="chart">
-        <div class="marker" style="top: 10px; left: 10px;">1. Before script</div>
-    </div>
-
+    <h1>Library Test</h1>
+    <div id="chart"></div>
     <div id="log"></div>
 
-    <script>document.querySelector('.marker').textContent = '2. Script started';</script>
-
-    <script src="lightweight-charts.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
 
     <script>
-        const logEl = document.getElementById('log');
-        const chartEl = document.getElementById('chart');
-
         function log(msg) {
             console.log(msg);
-            logEl.textContent += msg + '\n';
+            document.getElementById('log').textContent += msg + '\n';
         }
 
-        function logHTML(html) {
-            logEl.innerHTML = html;
-        }
+        log('Library loaded');
+        log('typeof createChart: ' + typeof createChart);
+        log('typeof CandlestickSeries: ' + typeof CandlestickSeries);
 
-        document.querySelector('.marker').textContent = '3. Library loaded';
-
-        log('createChart: ' + typeof createChart);
-        log('CandlestickSeries: ' + typeof CandlestickSeries);
-
-        try {
-            const chart = createChart(chartEl, {
+        if (typeof createChart === 'function') {
+            const chart = createChart(document.getElementById('chart'), {
                 layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
                 width: 800,
                 height: 400
             });
-
-            document.querySelector('.marker').textContent = '4. Chart created';
-            log('Chart object: ' + (chart ? 'exists' : 'null'));
+            log('Chart created');
 
             const series = chart.addSeries(CandlestickSeries, {
                 upColor: '#26a69a',
                 downColor: '#ef5350'
             });
-            log('Series object: ' + (series ? 'exists' : 'null'));
+            log('Series added');
 
-            const data = [
+            series.setData([
                 { time: '2026-02-28', open: 76184, high: 76274.8, low: 74937.52, close: 75513.91 },
                 { time: '2026-03-01', open: 75513.92, high: 75591.83, low: 75302.31, close: 75563.86 },
                 { time: '2026-03-02', open: 75563.87, high: 75857.32, low: 75497.43, close: 75676.79 },
                 { time: '2026-03-03', open: 75676.79, high: 76088.9, low: 75607.7, close: 75933.93 },
                 { time: '2026-03-04', open: 75933.94, high: 76004.14, low: 75818.14, close: 75957.18 }
-            ];
-
-            log('Setting data...');
-            series.setData(data);
-            log('Data set, count: ' + data.length);
+            ]);
+            log('Data set');
 
             chart.timeScale().fitContent();
-            log('Done - chart should be visible');
-
-            document.querySelector('.marker').textContent = '5. DONE';
-
-            setTimeout(() => {
-                log('Chart width: ' + chartEl.clientWidth);
-                log('Chart height: ' + chartEl.clientHeight);
-                log('Chart container innerHTML: ' + chartEl.innerHTML.substring(0, 200));
-            }, 1000);
-        } catch (e) {
-            log('ERROR: ' + e.message);
-            log(e.stack);
+            log('DONE');
+        } else {
+            log('ERROR: createChart not a function');
         }
     </script>
 </body>
