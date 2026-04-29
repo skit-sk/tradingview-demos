@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Size | TradingView Demos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif; background: #fafafa; padding: 20px; }
+        h1 { font-size: 24px; margin-bottom: 10px; color: #131722; }
+        .description { background: #fff; border: 1px solid #e3e8ee; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+        .wrapper { display: flex; gap: 40px; flex-wrap: wrap; }
+        .chart-box { display: flex; flex-direction: column; align-items: center; }
+        .chart-label { margin-top: 10px; font-size: 14px; color: #666; }
+        #container-small { width: 300px; height: 200px; border: 2px solid #26a69a; border-radius: 8px; }
+        #container-medium { width: 500px; height: 300px; border: 2px solid #2962ff; border-radius: 8px; }
+        #container-large { width: 800px; height: 400px; border: 2px solid #ef5350; border-radius: 8px; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Fixed Size Charts</h1>
+    <div class="description">
+        <strong>Ключевые параметры:</strong><br>
+        <code>width: number</code> — фиксированная ширина<br>
+        <code>height: number</code> — фиксированная высота<br>
+        <code>autoSize: false</code> (по умолчанию)
+    </div>
+    <div class="wrapper">
+        <div class="chart-box">
+            <div id="container-small"></div>
+            <div class="chart-label">300 x 200</div>
+        </div>
+        <div class="chart-box">
+            <div id="container-medium"></div>
+            <div class="chart-label">500 x 300</div>
+        </div>
+        <div class="chart-box">
+            <div id="container-large"></div>
+            <div class="chart-label">800 x 400</div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
+    <script>
+        function generateData(numPoints = 50) {
+            const data = [];
+            const date = new Date(Date.UTC(2024, 0, 1, 12, 0, 0, 0));
+            let value = 100;
+            for (let i = 0; i < numPoints; i++) {
+                value += (Math.random() - 0.48) * 2;
+                data.push({ time: date.getTime() / 1000, value });
+                date.setUTCDate(date.getUTCDate() + 1);
+            }
+            return data;
+        }
+
+        function createSmallChart() {
+            const chart = createChart(document.getElementById('container-small'), {
+                layout: { background: { type: 'solid', color: '#fff' }, textColor: '#333' },
+                width: 300,
+                height: 200,
+            });
+            chart.addSeries(LineSeries, { color: '#26a69a' }).setData(generateData(30));
+            chart.timeScale().fitContent();
+        }
+
+        function createMediumChart() {
+            const chart = createChart(document.getElementById('container-medium'), {
+                layout: { background: { type: 'solid', color: '#fff' }, textColor: '#333' },
+                width: 500,
+                height: 300,
+            });
+            chart.addSeries(LineSeries, { color: '#2962ff' }).setData(generateData(50));
+            chart.timeScale().fitContent();
+        }
+
+        function createLargeChart() {
+            const chart = createChart(document.getElementById('container-large'), {
+                layout: { background: { type: 'solid', color: '#fff' }, textColor: '#333' },
+                width: 800,
+                height: 400,
+            });
+            chart.addSeries(LineSeries, { color: '#ef5350' }).setData(generateData(80));
+            chart.timeScale().fitContent();
+        }
+
+        createSmallChart();
+        createMediumChart();
+        createLargeChart();
+    </script>
+</body>
+</html>

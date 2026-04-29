@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locale i18n | TradingView Demos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif; background: #fafafa; padding: 20px; }
+        h1 { font-size: 24px; margin-bottom: 10px; color: #131722; }
+        .description { background: #fff; border: 1px solid #e3e8ee; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+        .chart-container { background: #fff; border: 1px solid #e3e8ee; border-radius: 8px; overflow: hidden; }
+        #container { width: 100%; height: 400px; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Localization (i18n)</h1>
+    <div class="description">
+        <strong>Параметры:</strong><br>
+        <code>localization.locale: 'ru-RU'</code> — русская локаль<br>
+        <code>localization.dateFormat: 'dd/MM/yy'</code> — формат даты<br>
+        <code>timeScale.timeVisible: true</code> — видимое время
+    </div>
+    <div class="chart-container">
+        <div id="container"></div>
+    </div>
+
+    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
+    <script>
+        function generateData(numPoints = 50) {
+            const data = [];
+            const date = new Date(Date.UTC(2024, 0, 1, 12, 0, 0, 0));
+            let value = 100;
+            for (let i = 0; i < numPoints; i++) {
+                value += (Math.random() - 0.48) * 2;
+                data.push({ time: date.getTime() / 1000, value });
+                date.setUTCDate(date.getUTCDate() + 1);
+            }
+            return data;
+        }
+
+        const chart = createChart(document.getElementById('container'), {
+            layout: { background: { type: 'solid', color: '#fff' }, textColor: '#333' },
+            localization: {
+                locale: 'ru-RU',
+                dateFormat: 'dd/MM/yy',
+            },
+            timeScale: {
+                timeVisible: true,
+                secondsVisible: false,
+            },
+            width: document.getElementById('container').clientWidth,
+            height: 400,
+        });
+
+        const series = chart.addSeries(AreaSeries, {
+            lineColor: '#2962FF',
+            topColor: 'rgba(41, 98, 255, 0.28)',
+            bottomColor: 'rgba(41, 98, 255, 0.05)',
+        });
+
+        series.setData(generateData(50));
+        chart.timeScale().fitContent();
+
+        window.addEventListener('resize', () => {
+            chart.applyOptions({ width: document.getElementById('container').clientWidth });
+        });
+    </script>
+</body>
+</html>
