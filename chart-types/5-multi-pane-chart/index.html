@@ -1,57 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5. Multi-Pane Chart | TradingView Demos</title>
+    <title>Multi-Pane Chart</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif; background: #131722; color: #d1d4dc; padding: 20px; }
-        h1 { font-size: 24px; margin-bottom: 10px; color: #fff; }
-        p { color: #787b86; margin-bottom: 20px; max-width: 800px; }
-        .description { background: #1e222d; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
-        .chart-container { background: #1e222d; border-radius: 8px; overflow: hidden; }
-        #container { width: 100%; height: 500px; }
-        .code-link { display: inline-block; margin-top: 16px; color: #2962ff; text-decoration: none; }
-        .symbol-badge { display: inline-block; background: #2962ff; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 14px; margin-left: 10px; }
+        body { margin: 0; padding: 0; background: #131722; }
+        #container { width: 100%; height: 100vh; }
     </style>
 </head>
 <body>
-    <h1>5. Multi-Pane Chart<span class="symbol-badge">BTCUSDT 1h</span></h1>
-    <div class="description">
-        <strong>Функция:</strong> <code>createChart()</code> + <code>addPane()</code><br>
-        <strong>Горизонтальная шкала:</strong> Time + Panes API (v5.0+)<br>
-        <strong>Когда использовать:</strong> Несколько панелей — например, график + объём + индикаторы в отдельных панелях.<br>
-        <strong>Source:</strong> Binance API
-    </div>
-    <div class="chart-container">
-        <div id="container"></div>
-    </div>
-    <a class="code-link" href="../share/knowledge-base/tradingview/chart-types/5-multi-pane-chart.md">📄 Documentation</a>
-
-    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
+    <div id="container"></div>
     <script>
-        async function loadBinanceKlines(symbol = 'BTCUSDT', interval = '1h', limit = 100) {
-            const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
-            const response = await fetch(url);
-            return await response.json();
-        }
+        (async function() {
+            const response = await fetch('https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js');
+            const scriptText = await response.text();
+            const scriptEl = document.createElement('script');
+            scriptEl.textContent = scriptText;
+            document.head.appendChild(scriptEl);
 
-        async function init() {
-            const chartOptions = {
-                layout: {
-                    background: { type: 'solid', color: '#131722' },
-                    textColor: '#d1d4dc',
-                },
+            const { createChart, CandlestickSeries, HistogramSeries } = window.LightweightCharts;
+
+            const chart = createChart(document.getElementById('container'), {
+                layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
                 addDefaultPane: false,
-                autoSize: true,
-                width: 800,
-                height: 500,
-            };
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
 
-            const chart = createChart(document.getElementById('container'), chartOptions);
-
-            const klines = await loadBinanceKlines('BTCUSDT', '1h', 100);
+            const klinesRes = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=100');
+            const klines = await klinesRes.json();
 
             const candleData = klines.map(k => ({
                 time: k[0] / 1000,
@@ -68,25 +45,23 @@
             }));
 
             const mainPane = chart.addPane(1);
-            const candlestickSeries = mainPane.addSeries(CandlestickSeries, {
+            mainPane.addSeries(CandlestickSeries, {
                 upColor: '#26a69a',
                 downColor: '#ef5350',
                 borderVisible: false,
                 wickUpColor: '#26a69a',
                 wickDownColor: '#ef5350',
-            });
-            candlestickSeries.setData(candleData);
+            }).setData(candleData);
 
             const volumePane = chart.addPane(2);
-            const volumeSeries = volumePane.addSeries(HistogramSeries, {
-                color: '#26a69a',
-            });
-            volumeSeries.setData(volumeData);
+            volumePane.addSeries(HistogramSeries, { color: '#26a69a' }).setData(volumeData);
 
             chart.timeScale().fitContent();
-        }
 
-        init().catch(console.error);
+            window.addEventListener('resize', () => {
+                chart.applyOptions({ width: window.innerWidth, height: window.innerHeight });
+            });
+        })();
     </script>
 </body>
 </html>

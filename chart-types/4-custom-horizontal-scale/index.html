@@ -1,112 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4. Custom Horizontal Scale | TradingView Demos</title>
+    <title>Custom Horizontal Scale</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif; background: #fafafa; padding: 20px; }
-        h1 { font-size: 24px; margin-bottom: 10px; color: #131722; }
-        p { color: #5c636a; margin-bottom: 20px; max-width: 800px; }
-        .description { background: #fff; border: 1px solid #e3e8ee; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
-        .chart-container { background: #fff; border: 1px solid #e3e8ee; border-radius: 8px; overflow: hidden; }
-        #container { width: 100%; height: 400px; }
-        .code-link { display: inline-block; margin-top: 16px; color: #2962ff; text-decoration: none; }
+        body { margin: 0; padding: 0; background: #131722; }
+        #container { width: 100%; height: 100vh; }
     </style>
 </head>
 <body>
-    <h1>4. Custom Horizontal Scale (createChartEx)</h1>
-    <div class="description">
-        <strong>Функция:</strong> <code>createChartEx()</code> + custom <code>IHorzScaleBehavior</code><br>
-        <strong>Горизонтальная шкала:</strong> Custom-defined<br>
-        <strong>Когда использовать:</strong> Нестандартные данные, где время не подходит. Кастомная логика преобразования.
-    </div>
-    <div class="chart-container">
-        <div id="container"></div>
-    </div>
-    <a class="code-link" href="../share/knowledge-base/tradingview/chart-types/4-custom-horizontal-scale.md">📄 Documentation</a>
-
-    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
+    <div id="container"></div>
     <script>
-        // Custom horizontal scale behavior for Fibonacci sequence
-        class FibonacciHorzScaleBehavior {
-            constructor() {
-                this._spacing = 50;
-            }
+        (async function() {
+            const response = await fetch('https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js');
+            const scriptText = await response.text();
+            const scriptEl = document.createElement('script');
+            scriptEl.textContent = scriptText;
+            document.head.appendChild(scriptEl);
 
-            options() {
-                return {
-                    from: 0,
-                    to: 13,
-                };
-            }
+            const { createChartEx, LineSeries } = window.LightweightCharts;
 
-            createConverterToInternalObj(scaleService) {
-                return (time) => {
-                    return time;
-                };
-            }
-
-            createConverterFromInternalObj(scaleService) {
-                return (index) => {
-                    return index;
-                };
-            }
-
-            formatLabel(scaleService, timestamp) {
-                const fibNumbers = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233];
-                const index = Math.round(timestamp);
-                return fibNumbers[index] || timestamp.toString();
-            }
-
-            fillDatesForRange(baseTime, startIndex, endIndex, startDate) {
-                const result = [];
-                for (let i = startIndex; i <= endIndex; i++) {
-                    result.push({
-                        time: i,
-                        color: '#fafafa',
-                    });
+            class FibonacciHorzScaleBehavior {
+                constructor() { this._spacing = 50; }
+                options() { return { from: 0, to: 13 }; }
+                createConverterToInternalObj() { return time => time; }
+                createConverterFromInternalObj() { return index => index; }
+                formatLabel(scaleService, timestamp) {
+                    const fib = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233];
+                    return fib[Math.round(timestamp)] || timestamp.toString();
                 }
-                return result;
+                fillDatesForRange() { return []; }
             }
-        }
 
-        const chartOptions = {
-            layout: {
-                background: { type: 'solid', color: '#ffffff' },
-                textColor: '#333333',
-            },
-            autoSize: true,
-            width: 800,
-            height: 400,
-        };
+            const chart = createChartEx(document.getElementById('container'), new FibonacciHorzScaleBehavior(), {
+                layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
 
-        const behavior = new FibonacciHorzScaleBehavior();
-        const chart = createChartEx(document.getElementById('container'), behavior, chartOptions);
+            const series = chart.addSeries(LineSeries, { color: '#2962FF', lineWidth: 2 });
 
-        const lineSeries = chart.addSeries(LineSeries, {
-            color: '#2962FF',
-            lineWidth: 2,
-        });
+            series.setData([
+                { time: 0, value: 0 }, { time: 1, value: 1 }, { time: 2, value: 1 },
+                { time: 3, value: 2 }, { time: 4, value: 3 }, { time: 5, value: 5 },
+                { time: 6, value: 8 }, { time: 7, value: 13 }, { time: 8, value: 21 },
+                { time: 9, value: 34 }, { time: 10, value: 55 },
+            ]);
 
-        // Fibonacci-like data
-        const data = [
-            { time: 0, value: 0 },
-            { time: 1, value: 1 },
-            { time: 2, value: 1 },
-            { time: 3, value: 2 },
-            { time: 4, value: 3 },
-            { time: 5, value: 5 },
-            { time: 6, value: 8 },
-            { time: 7, value: 13 },
-            { time: 8, value: 21 },
-            { time: 9, value: 34 },
-            { time: 10, value: 55 },
-        ];
+            chart.timeScale().fitContent();
 
-        lineSeries.setData(data);
-        chart.timeScale().fitContent();
+            window.addEventListener('resize', () => {
+                chart.applyOptions({ width: window.innerWidth, height: window.innerHeight });
+            });
+        })();
     </script>
 </body>
 </html>
