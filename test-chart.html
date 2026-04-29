@@ -3,17 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Test Chart</title>
+    <style>
+        body { background: #131722; margin: 0; padding: 20px; }
+        h1 { color: #fff; font-family: sans-serif; }
+        #container { width: 100%; height: 400px; background: #1e222d; }
+        #error { color: #ef5350; font-family: monospace; padding: 10px; background: #2a2e39; margin-top: 10px; display: none; }
+    </style>
 </head>
 <body>
     <h1>BTCUSDT 1h - Candlestick Chart</h1>
-    <div id="container" style="width: 100%; height: 400px;"></div>
+    <div id="container"></div>
+    <div id="error"></div>
 
     <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
     <script>
-        async function loadBinanceKlines(symbol = 'BTCUSDT', interval = '1h', limit = 200) {
+        function log(msg) {
+            console.log(msg);
+            document.getElementById('error').textContent += msg + '\n';
+            document.getElementById('error').style.display = 'block';
+        }
+
+        async function loadBinanceKlines(symbol, interval, limit) {
+            log(`Fetching ${symbol} ${interval} ${limit}`);
             const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
             const response = await fetch(url);
+            log(`Response status: ${response.status}`);
             const data = await response.json();
+            log(`Received ${data.length} candles`);
             return data.map(k => ({
                 time: k[0] / 1000,
                 open: parseFloat(k[1]),
@@ -24,36 +40,46 @@
         }
 
         async function init() {
-            console.log('Starting chart initialization...');
-            const chart = createChart(document.getElementById('container'), {
-                layout: {
-                    background: { type: 'solid', color: '#131722' },
-                    textColor: '#d1d4dc',
-                },
-                width: 800,
-                height: 400,
-            });
-
-            const candlestickSeries = chart.addSeries(CandlestickSeries, {
-                upColor: '#26a69a',
-                downColor: '#ef5350',
-                borderVisible: false,
-                wickUpColor: '#26a69a',
-                wickDownColor: '#ef5350',
-            });
-
             try {
+                const chartOptions = {
+                    layout: {
+                        background: { type: 'solid', color: '#131722' },
+                        textColor: '#d1d4dc',
+                    },
+                    width: 800,
+                    height: 400,
+                };
+                log(`Creating chart with options: ${JSON.stringify(chartOptions.layout)}`);
+
+                const chart = createChart(document.getElementById('container'), chartOptions);
+                log('Chart created');
+
+                const candlestickSeries = chart.addSeries(CandlestickSeries, {
+                    upColor: '#26a69a',
+                    downColor: '#ef5350',
+                    borderVisible: false,
+                    wickUpColor: '#26a69a',
+                    wickDownColor: '#ef5350',
+                });
+                log('Candlestick series added');
+
                 const candleData = await loadBinanceKlines('BTCUSDT', '1h', 200);
-                console.log('Loaded', candleData.length, 'candles');
+                log(`First candle: ${JSON.stringify(candleData[0])}`);
+                log(`Last candle: ${JSON.stringify(candleData[candleData.length-1])}`);
+
                 candlestickSeries.setData(candleData);
+                log('Data set on series');
+
                 chart.timeScale().fitContent();
-                console.log('Chart rendered successfully');
+                log('Time scale fitted');
+                log('DONE - Chart should be visible');
             } catch (e) {
-                console.error('Error loading data:', e);
+                log(`ERROR: ${e.message}`);
+                log(e.stack);
             }
         }
 
-        init().catch(console.error);
+        init();
     </script>
 </body>
 </html>
