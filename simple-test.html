@@ -6,11 +6,11 @@
     <style>
         body { background: #131722; margin: 0; padding: 20px; font-family: sans-serif; color: #fff; }
         #chart { width: 800px; height: 400px; background: #1e222d; position: relative; }
-        .marker { position: absolute; padding: 5px 10px; background: #2962ff; color: #fff; font-size: 12px; }
+        .marker { position: absolute; padding: 5px 10px; background: #2962ff; color: #fff; font-size: 12px; z-index: 100; }
     </style>
 </head>
 <body>
-    <h1>Simple Test</h1>
+    <h1>Simple Test - Local Library</h1>
 
     <div id="chart">
         <div class="marker" style="top: 10px; left: 10px;">1. Before script</div>
@@ -20,7 +20,7 @@
 
     <script>document.querySelector('.marker').textContent = '2. Script started';</script>
 
-    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
+    <script src="lightweight-charts.js"></script>
 
     <script>
         const logEl = document.getElementById('log');
