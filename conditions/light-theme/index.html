@@ -8,6 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif; background: #f5f5f5; padding: 20px; }
         h1 { font-size: 24px; margin-bottom: 10px; color: #333; }
+        .symbol-badge { display: inline-block; background: #2962ff; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 14px; margin-left: 10px; }
         .description { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
         .chart-container { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
         #container { width: 100%; height: 400px; }
@@ -15,13 +16,14 @@
     </style>
 </head>
 <body>
-    <h1>Light Theme</h1>
+    <h1>Light Theme<span class="symbol-badge">BTCUSDT 1h</span></h1>
     <div class="description">
         <strong>Ключевые параметры:</strong><br>
         <code>layout.background.color: '#ffffff'</code><br>
         <code>layout.textColor: '#333333'</code><br>
         <code>grid.vertLines.color: '#e0e0e0'</code><br>
-        <code>grid.horzLines.color: '#e0e0e0'</code>
+        <code>grid.horzLines.color: '#e0e0e0'</code><br>
+        <strong>Source:</strong> Binance API
     </div>
     <div class="chart-container">
         <div id="container"></div>
@@ -29,40 +31,43 @@
 
     <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
     <script>
-        function generateData(numPoints = 100) {
-            const data = [];
-            const date = new Date(Date.UTC(2024, 0, 1, 12, 0, 0, 0));
-            let value = 100;
-            for (let i = 0; i < numPoints; i++) {
-                value += (Math.random() - 0.48) * 2;
-                data.push({ time: date.getTime() / 1000, value });
-                date.setUTCDate(date.getUTCDate() + 1);
-            }
-            return data;
+        async function loadBinanceKlines(symbol = 'BTCUSDT', interval = '1h', limit = 100) {
+            const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return data.map(k => ({
+                time: k[0] / 1000,
+                value: parseFloat(k[4]),
+            }));
         }
 
-        const chart = createChart(document.getElementById('container'), {
-            layout: {
-                background: { type: 'solid', color: '#ffffff' },
-                textColor: '#333333',
-            },
-            grid: {
-                vertLines: { color: '#e0e0e0' },
-                horzLines: { color: '#e0e0e0' },
-            },
-            autoSize: true,
-            width: 800,
-            height: 400,
-        });
+        async function init() {
+            const chart = createChart(document.getElementById('container'), {
+                layout: {
+                    background: { type: 'solid', color: '#ffffff' },
+                    textColor: '#333333',
+                },
+                grid: {
+                    vertLines: { color: '#e0e0e0' },
+                    horzLines: { color: '#e0e0e0' },
+                },
+                autoSize: true,
+                width: 800,
+                height: 400,
+            });
 
-        const areaSeries = chart.addSeries(AreaSeries, {
-            lineColor: '#2962FF',
-            topColor: 'rgba(41, 98, 255, 0.28)',
-            bottomColor: 'rgba(41, 98, 255, 0.05)',
-        });
+            const areaSeries = chart.addSeries(AreaSeries, {
+                lineColor: '#2962FF',
+                topColor: 'rgba(41, 98, 255, 0.28)',
+                bottomColor: 'rgba(41, 98, 255, 0.05)',
+            });
 
-        areaSeries.setData(generateData(100));
-        chart.timeScale().fitContent();
+            const areaData = await loadBinanceKlines('BTCUSDT', '1h', 100);
+            areaSeries.setData(areaData);
+            chart.timeScale().fitContent();
+        }
+
+        init().catch(console.error);
     </script>
 </body>
 </html>
