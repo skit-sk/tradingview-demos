@@ -5,38 +5,50 @@
     <title>Simple Chart Test</title>
     <style>
         body { background: #131722; margin: 0; padding: 20px; font-family: sans-serif; color: #fff; }
-        #chart { width: 800px; height: 400px; background: #1e222d; }
+        #chart { width: 800px; height: 400px; background: #1e222d; position: relative; }
+        .marker { position: absolute; padding: 5px 10px; background: #2962ff; color: #fff; font-size: 12px; }
     </style>
 </head>
 <body>
     <h1>Simple Test</h1>
-    <div id="chart"></div>
-    <div id="log" style="margin-top: 20px; color: #ef5350; white-space: pre-wrap;"></div>
+
+    <div id="chart">
+        <div class="marker" style="top: 10px; left: 10px;">1. Before script</div>
+    </div>
+
+    <div id="log" style="margin-top: 20px; color: #ef5350; white-space: pre-wrap; font-size: 12px;"></div>
+
+    <script>document.querySelector('.marker').textContent = '2. Script started';</script>
 
     <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
+
     <script>
         const logEl = document.getElementById('log');
+        const chartEl = document.getElementById('chart');
 
         function log(msg) {
             console.log(msg);
             logEl.textContent += msg + '\n';
         }
 
-        log('Page loaded');
-        log('createChart available: ' + typeof createChart);
-        log('CandlestickSeries available: ' + typeof CandlestickSeries);
+        document.querySelector('.marker').textContent = '3. Library loaded';
 
-        const chart = createChart(document.getElementById('chart'), {
+        log('createChart: ' + typeof createChart);
+        log('CandlestickSeries: ' + typeof CandlestickSeries);
+
+        const chart = createChart(chartEl, {
             layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
             width: 800,
             height: 400
         });
-        log('Chart created');
+
+        document.querySelector('.marker').textContent = '4. Chart created';
 
         const series = chart.addSeries(CandlestickSeries, {
             upColor: '#26a69a',
             downColor: '#ef5350'
         });
+
         log('Series added');
 
         const data = [
@@ -51,7 +63,9 @@
         log('Data set, count: ' + data.length);
 
         chart.timeScale().fitContent();
-        log('Done - chart should be visible');
+        log('Done');
+
+        document.querySelector('.marker').textContent = '5. DONE';
     </script>
 </body>
 </html>
