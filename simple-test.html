@@ -35,6 +35,9 @@
                 document.head.appendChild(scriptEl);
                 log('Script appended');
 
+                log('window.LightweightCharts: ' + typeof window.LightweightCharts);
+
+                const { createChart, CandlestickSeries } = window.LightweightCharts;
                 log('createChart: ' + typeof createChart);
                 log('CandlestickSeries: ' + typeof CandlestickSeries);
 
