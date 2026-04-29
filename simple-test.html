@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Chart Test</title>
+    <style>
+        body { background: #131722; margin: 0; padding: 20px; font-family: sans-serif; color: #fff; }
+        #chart { width: 800px; height: 400px; background: #1e222d; }
+    </style>
+</head>
+<body>
+    <h1>Simple Test</h1>
+    <div id="chart"></div>
+    <div id="log" style="margin-top: 20px; color: #ef5350; white-space: pre-wrap;"></div>
+
+    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
+    <script>
+        const logEl = document.getElementById('log');
+
+        function log(msg) {
+            console.log(msg);
+            logEl.textContent += msg + '\n';
+        }
+
+        log('Page loaded');
+        log('createChart available: ' + typeof createChart);
+        log('CandlestickSeries available: ' + typeof CandlestickSeries);
+
+        const chart = createChart(document.getElementById('chart'), {
+            layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
+            width: 800,
+            height: 400
+        });
+        log('Chart created');
+
+        const series = chart.addSeries(CandlestickSeries, {
+            upColor: '#26a69a',
+            downColor: '#ef5350'
+        });
+        log('Series added');
+
+        const data = [
+            { time: 1777485600, open: 76184, high: 76274.8, low: 74937.52, close: 75513.91 },
+            { time: 1777489200, open: 75513.92, high: 75591.83, low: 75302.31, close: 75563.86 },
+            { time: 1777492800, open: 75563.87, high: 75857.32, low: 75497.43, close: 75676.79 },
+            { time: 1777496400, open: 75676.79, high: 76088.9, low: 75607.7, close: 75933.93 },
+            { time: 1777500000, open: 75933.94, high: 76004.14, low: 75818.14, close: 75957.18 }
+        ];
+
+        series.setData(data);
+        log('Data set, count: ' + data.length);
+
+        chart.timeScale().fitContent();
+        log('Done - chart should be visible');
+    </script>
+</body>
+</html>
