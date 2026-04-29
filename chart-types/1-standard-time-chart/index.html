@@ -8,13 +8,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif; background: #131722; color: #d1d4dc; padding: 20px; }
         h1 { font-size: 24px; margin-bottom: 10px; color: #fff; }
-        p { color: #787b86; margin-bottom: 20px; max-width: 800px; }
         .description { background: #1e222d; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
         .chart-container { background: #1e222d; border-radius: 8px; overflow: hidden; }
         #container { width: 100%; height: 400px; }
         .code-link { display: inline-block; margin-top: 16px; color: #2962ff; text-decoration: none; }
         .symbol-badge { display: inline-block; background: #2962ff; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 14px; margin-left: 10px; }
-        #error { color: #ef5350; font-family: monospace; padding: 10px; background: #2a2e39; margin-top: 10px; display: none; white-space: pre-wrap; }
+        #log { margin-top: 20px; color: #0f0; white-space: pre-wrap; font-size: 12px; display: none; }
     </style>
 </head>
 <body>
@@ -28,43 +27,35 @@
     <div class="chart-container">
         <div id="container"></div>
     </div>
-    <div id="error"></div>
+    <div id="log"></div>
     <a class="code-link" href="../share/knowledge-base/tradingview/chart-types/1-standard-time-chart.md">📄 Documentation</a>
 
-    <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js"></script>
     <script>
         function log(msg) {
             console.log(msg);
-            const err = document.getElementById('error');
-            err.textContent += msg + '\n';
-            err.style.display = 'block';
+            document.getElementById('log').textContent += msg + '\n';
+            document.getElementById('log').style.display = 'block';
         }
 
-        function init() {
-            log('init() called');
+        async function init() {
+            log('Loading library...');
 
-            if (typeof createChart === 'undefined') {
-                log('ERROR: createChart not defined');
-                return;
-            }
-            log('createChart is defined');
+            const response = await fetch('https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.development.js');
+            const scriptText = await response.text();
 
-            const chartOptions = {
-                layout: {
-                    background: { type: 'solid', color: '#131722' },
-                    textColor: '#d1d4dc',
-                },
-                grid: {
-                    vertLines: { color: '#1e222d' },
-                    horzLines: { color: '#1e222d' },
-                },
+            const scriptEl = document.createElement('script');
+            scriptEl.textContent = scriptText;
+            document.head.appendChild(scriptEl);
+
+            const { createChart, CandlestickSeries } = window.LightweightCharts;
+            log('Library loaded');
+
+            const chart = createChart(document.getElementById('container'), {
+                layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
+                grid: { vertLines: { color: '#1e222d' }, horzLines: { color: '#1e222d' } },
                 width: 800,
                 height: 400,
-            };
-
-            log('Creating chart...');
-            const chart = createChart(document.getElementById('container'), chartOptions);
-            log('Chart created');
+            });
 
             const candlestickSeries = chart.addSeries(CandlestickSeries, {
                 upColor: '#26a69a',
@@ -73,41 +64,24 @@
                 wickUpColor: '#26a69a',
                 wickDownColor: '#ef5350',
             });
-            log('Candlestick series added');
 
-            const url = 'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=200';
-            log('Fetching ' + url);
+            const klinesRes = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=200');
+            const klines = await klinesRes.json();
 
-            fetch(url)
-                .then(response => {
-                    log('Response status: ' + response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    log('Received ' + data.length + ' candles');
-                    const candleData = data.map(k => ({
-                        time: k[0] / 1000,
-                        open: parseFloat(k[1]),
-                        high: parseFloat(k[2]),
-                        low: parseFloat(k[3]),
-                        close: parseFloat(k[4]),
-                    }));
-                    log('First candle: ' + JSON.stringify(candleData[0]));
-                    candlestickSeries.setData(candleData);
-                    log('Data set on series');
-                    chart.timeScale().fitContent();
-                    log('DONE - Chart should be visible');
-                })
-                .catch(e => {
-                    log('ERROR: ' + e.message);
-                });
+            const candleData = klines.map(k => ({
+                time: k[0] / 1000,
+                open: parseFloat(k[1]),
+                high: parseFloat(k[2]),
+                low: parseFloat(k[3]),
+                close: parseFloat(k[4]),
+            }));
+
+            candlestickSeries.setData(candleData);
+            chart.timeScale().fitContent();
+            log('Chart rendered with ' + candleData.length + ' candles');
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
+        init().catch(e => log('ERROR: ' + e.message));
     </script>
 </body>
 </html>
