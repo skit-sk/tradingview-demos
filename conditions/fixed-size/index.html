@@ -5,7 +5,7 @@
     <title>Fixed Size</title>
     <style>
         body { margin: 0; padding: 0; background: #131722; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        #container { width: 280px; height: 160px; border: 2px solid #26a69a; }
+        #container { width: 180px; height: 100px; border: 2px solid #26a69a; }
     </style>
 </head>
 <body>
@@ -26,7 +26,7 @@
 
             const chart = createChart(document.getElementById('container'), {
                 layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
-                width: 280, height: 160,
+                width: 180, height: 100,
             });
             chart.addSeries(LineSeries, { color: '#26a69a' }).setData(lineData);
             chart.timeScale().fitContent();
