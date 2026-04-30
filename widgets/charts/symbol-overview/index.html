@@ -4,28 +4,59 @@
     <meta charset="UTF-8">
     <title>Symbol Overview Widget</title>
     <style>
-        body { margin: 0; padding: 0; background: #131722; height: 100vh; }
-        #widget-container { width: 100%; height: 100%; }
+        body { margin: 0; padding: 0; background: #0F0F0F; height: 100vh; overflow: hidden; }
+        .tradingview-widget-container { width: 100%; height: 100%; position: relative; }
+        .tradingview-widget-container__widget { width: 100%; height: 100%; }
+        .tradingview-widget-copyright { display: none; }
     </style>
 </head>
 <body>
-    <div id="widget-container"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script type="text/javascript">
-    window.addEventListener('DOMContentLoaded', function() {
-        new TradingView.widget({
-            "symbol": "BITSTAMP:BTCUSD",
-            "width": "100%",
-            "height": "100%",
-            "locale": "en",
-            "colorTheme": "dark",
-            "isTransparent": false,
-            "autosize": true,
-            "dateRange": "1M",
-            "showVolume": true,
-            "showMA": true
-        });
-    });
-    </script>
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+  {
+  "lineWidth": 2,
+  "lineType": 0,
+  "chartType": "area",
+  "showVolume": true,
+  "fontColor": "rgb(106, 109, 120)",
+  "gridLineColor": "rgba(242, 242, 242, 0.06)",
+  "volumeUpColor": "rgba(34, 171, 148, 0.5)",
+  "volumeDownColor": "rgba(247, 82, 95, 0.5)",
+  "backgroundColor": "#0F0F0F",
+  "widgetFontColor": "#DBDBDB",
+  "upColor": "#22ab94",
+  "downColor": "#f7525f",
+  "borderUpColor": "#22ab94",
+  "borderDownColor": "#f7525f",
+  "wickUpColor": "#22ab94",
+  "wickDownColor": "#f7525f",
+  "colorTheme": "dark",
+  "isTransparent": false,
+  "locale": "en",
+  "chartOnly": false,
+  "scalePosition": "right",
+  "scaleMode": "Normal",
+  "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+  "valuesTracking": "1",
+  "changeMode": "price-and-percent",
+  "symbols": [["BINANCE:BTCUSDT|1D"]],
+  "dateRanges": ["1d|1", "1m|30", "3m|60", "12m|1D", "60m|1W", "all|1M"],
+  "fontSize": "10",
+  "headerFontSize": "medium",
+  "autosize": true,
+  "width": "100%",
+  "height": "100%",
+  "noTimeScale": false,
+  "hideDateRanges": false,
+  "showMA": true,
+  "maLength": 9,
+  "maLineColor": "#2962FF",
+  "maLineWidth": 1,
+  "hideMarketStatus": false,
+  "hideSymbolLogo": false
+}
+  </script>
+</div>
 </body>
 </html>
