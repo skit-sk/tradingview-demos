@@ -5,26 +5,33 @@
     <title>Mini Chart Widget</title>
     <style>
         body { margin: 0; padding: 0; background: #131722; }
-        .widgets-row { display: flex; gap: 20px; flex-wrap: wrap; padding: 20px; }
-        .widget-wrapper { flex: 1; min-width: 300px; border: 1px solid #1e222d; border-radius: 8px; overflow: hidden; }
-        .widget-wrapper h3 { margin: 0; padding: 10px; background: #1e222d; text-align: center; font-size: 14px; color: #d1d4dc; }
-        iframe { width: 100%; height: 200px; border: none; }
+        .widget-wrapper { display: inline-block; width: 200px; margin: 10px; vertical-align: top; }
+        .widget-wrapper h3 { margin: 0; padding: 8px; background: #1e222d; text-align: center; font-size: 12px; color: #d1d4dc; border-radius: 4px 4px 0 0; }
+        #container { width: 200px; height: 150px; background: #131722; }
     </style>
 </head>
 <body>
-    <div class="widgets-row">
-        <div class="widget-wrapper">
-            <h3>BTC/USD</h3>
-            <iframe src="https://www.tradingview.com/widget/mini-chart/?symbol=BITSTAMP%3ABTCUSD" allow="fullscreen"></iframe>
-        </div>
-        <div class="widget-wrapper">
-            <h3>ETH/USD</h3>
-            <iframe src="https://www.tradingview.com/widget/mini-chart/?symbol=BITSTAMP%3AETHUSD" allow="fullscreen"></iframe>
-        </div>
-        <div class="widget-wrapper">
-            <h3>S&P 500</h3>
-            <iframe src="https://www.tradingview.com/widget/mini-chart/?symbol=OANDA%3ASPX500USD" allow="fullscreen"></iframe>
-        </div>
+    <div class="widget-wrapper">
+        <h3>BTC/USD</h3>
+        <div id="container"></div>
     </div>
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+    new TradingView.widget({
+        "symbol": "BITSTAMP:BTCUSD",
+        "interval": "D",
+        "container_id": "container",
+        "width": 200,
+        "height": 150,
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "toolbar_bg": "#1e222d",
+        "enable_publishing": false,
+        "hide_top_toolbar": true,
+        "hide_side_toolbar": true,
+        "allow_symbol_change": true
+    });
+    </script>
 </body>
 </html>
