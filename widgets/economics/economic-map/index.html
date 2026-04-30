@@ -2,26 +2,21 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Economic Map Widget</title>
+    <title>economic-map</title>
     <style>
-        body { margin: 0; padding: 0; background: #0F0F0F; height: 100vh; overflow: hidden; }
-        .tradingview-widget-container { width: 100%; height: 100%; position: relative; }
-        .tradingview-widget-container__widget { width: 100%; height: 100%; }
-        .tradingview-widget-copyright { display: none; }
+        body { margin: 0; padding: 0; background: #1a1a1a; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .preview { text-align: center; color: #888; font-family: -apple-system, sans-serif; }
+        .preview-icon { width: 40px; height: 40px; margin-bottom: 8px; opacity: 0.5; }
+        .preview-text { font-size: 12px; }
     </style>
 </head>
 <body>
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-economic-map.js" async>
-  {
-  "colorTheme": "dark",
-  "isTransparent": false,
-  "locale": "en",
-  "width": "100%",
-  "height": "100%"
-}
-  </script>
-</div>
+    <div class="preview">
+        <svg class="preview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18M9 21V9"/>
+        </svg>
+        <div class="preview-text">economic map<br>Click Open Full</div>
+    </div>
 </body>
 </html>
