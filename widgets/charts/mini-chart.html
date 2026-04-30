@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Chart Widget Demo</title>
+    <style>
+        body { margin: 0; padding: 20px; background: #131722; color: #d1d4dc; font-family: Arial, sans-serif; }
+        h1 { color: #2962FF; margin-bottom: 20px; }
+        .description { margin-bottom: 20px; line-height: 1.6; }
+        .widgets-row { display: flex; gap: 20px; flex-wrap: wrap; }
+        .widget-wrapper { flex: 1; min-width: 300px; border: 1px solid #1e222d; border-radius: 8px; overflow: hidden; }
+        .widget-wrapper h3 { margin: 0; padding: 10px; background: #1e222d; text-align: center; font-size: 14px; }
+        iframe { width: 100%; height: 200px; border: none; }
+        .code-section { margin-top: 30px; }
+        pre { background: #1e222d; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 12px; }
+        code { color: #26a69a; }
+    </style>
+</head>
+<body>
+    <h1>Mini Chart Widgets</h1>
+
+    <div class="description">
+        <p>Компактные графики для отображения цены и изменения символов.</p>
+    </div>
+
+    <div class="widgets-row">
+        <div class="widget-wrapper">
+            <h3>BTC/USD</h3>
+            <tv-mini-ticker-chart symbol="BTCUSD" width="100%" height="200"></tv-mini-ticker-chart>
+        </div>
+        <div class="widget-wrapper">
+            <h3>ETH/USD</h3>
+            <tv-mini-ticker-chart symbol="ETHUSD" width="100%" height="200"></tv-mini-ticker-chart>
+        </div>
+        <div class="widget-wrapper">
+            <h3>S&P 500</h3>
+            <tv-mini-ticker-chart symbol="SPX" width="100%" height="200"></tv-mini-ticker-chart>
+        </div>
+    </div>
+
+    <div class="code-section">
+        <h2>Web Component код:</h2>
+        <pre><code>&lt;tv-mini-ticker-chart
+    symbol="BTCUSD"
+    width="100%"
+    height="200"
+    locale="en"
+    dateRange="1M"
+&gt;&lt;/tv-mini-ticker-chart&gt;</code></pre>
+    </div>
+
+    <script src="https://unpkg.com/@tradingview/widgets-core@1.0.0/dist/widgets.core.umd.js"></script>
+</body>
+</html>

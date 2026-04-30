@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ticker Tape Widget Demo</title>
+    <style>
+        body { margin: 0; padding: 20px; background: #131722; color: #d1d4dc; font-family: Arial, sans-serif; }
+        h1 { color: #2962FF; margin-bottom: 20px; }
+        .description { margin-bottom: 20px; line-height: 1.6; }
+        #ticker-tape-widget { width: 100%; height: 80px; border: 1px solid #1e222d; border-radius: 8px; overflow: hidden; }
+        .code-section { margin-top: 30px; }
+        pre { background: #1e222d; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 12px; }
+        code { color: #26a69a; }
+    </style>
+</head>
+<body>
+    <h1>Ticker Tape Widget</h1>
+
+    <div class="description">
+        <p>Бегущая строка тикеров — классический биржевой стиль.</p>
+    </div>
+
+    <div id="ticker-tape-widget"></div>
+
+    <div class="code-section">
+        <h2>Код для встраивания:</h2>
+        <pre><code>&lt;div id="ticker-tape-widget"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="https://s3.tradingview.com/tv.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+new TradingView.widget({
+    "width": "100%",
+    "height": 75,
+    "locale": "en",
+    "darkMode": true,
+    "symbols": [
+        ["BTC/USD", "BITSTAMP:BTCUSD"],
+        ["ETH/USD", "BITSTAMP:ETHUSD"],
+        ["S&P 500", "OANDA:SPX500USD"],
+        ["EUR/USD", "OANDA:EURUSD"]
+    ],
+    "showSymbolLogo": true,
+    "showVolume": true,
+    "isTransparent": false,
+    "displayMode": "adaptive"
+});
+&lt;/script&gt;</code></pre>
+    </div>
+
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+    new TradingView.widget({
+        "width": "100%",
+        "height": 75,
+        "locale": "en",
+        "darkMode": true,
+        "symbols": [
+            ["BTC/USD", "BITSTAMP:BTCUSD"],
+            ["ETH/USD", "BITSTAMP:ETHUSD"],
+            ["S&P 500", "OANDA:SPX500USD"],
+            ["EUR/USD", "OANDA:EURUSD"]
+        ],
+        "showSymbolLogo": true,
+        "showVolume": true,
+        "isTransparent": false,
+        "displayMode": "adaptive"
+    });
+    </script>
+</body>
+</html>
