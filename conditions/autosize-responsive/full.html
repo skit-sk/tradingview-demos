@@ -31,7 +31,8 @@
         .params-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
-        .params-table td code { color: #2962ff; font-family: monospace; }
+        .params-table td code { font-family: monospace; }
+        .color-swatch { display: inline-block; width: 16px; height: 16px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
         .debug-data .str { color: #26a69a; }
@@ -56,8 +57,11 @@
                 <table class="params-table">
                     <tr><th>Parameter</th><th>Value</th></tr>
                     <tr><td>autoSize</td><td><code>true</code></td></tr>
-                    <tr><td>width</td><td><code>не указывается</code></td></tr>
-                    <tr><td>height</td><td><code>не указывается</code></td></tr>
+                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td></tr>
+                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td></tr>
+                    <tr><td>series.lineColor</td><td><span class="color-swatch" style="background:#2962FF"></span><code>'#2962FF'</code></td></tr>
+                    <tr><td>series.topColor</td><td><span class="color-swatch" style="background:rgba(41,98,255,0.28)"></span><code>'rgba(41, 98, 255, 0.28)'</code></td></tr>
+                    <tr><td>series.bottomColor</td><td><span class="color-swatch" style="background:rgba(41,98,255,0.05)"></span><code>'rgba(41, 98, 255, 0.05)'</code></td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT Close Price 1h, 100 candles</div></div>
