@@ -31,7 +31,8 @@
         .params-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
-        .params-table td code { color: #2962ff; font-family: monospace; }
+        .params-table td code { font-family: monospace; }
+        .color-swatch { display: inline-block; width: 16px; height: 16px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
         .debug-data .num { color: #26a69a; }
@@ -43,21 +44,23 @@
             <a class="back-link" href="../../">← Gallery</a>
             <span class="title">4. Custom Horizontal Scale</span>
         </div>
-        <span class="data-badge">Fibonacci Scale</span>
+        <span class="data-badge">Fibonacci Data</span>
     </div>
     <div class="chart-container"><div id="container"></div></div>
     <div class="info-panel" id="infoPanel">
         <button class="info-toggle" onclick="togglePanel()">INFO</button>
         <div class="info-content">
-            <div class="info-section"><h3>Method</h3><a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#createchartex" target="_blank">createChartEx()</a> + <a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#interfaces/IHorzScaleBehavior" target="_blank">IHorzScaleBehavior</a></div>
-            <div class="info-section"><h3>Description</h3><div class="description">График с кастомной горизонтальной шкалой. Используется <code>IHorzScaleBehavior</code> для преобразования нестандартных данных (Fibonacci sequence в данном примере).</div></div>
+            <div class="info-section"><h3>Method</h3><div class="description"><code>createChart()</code> — Standard chart with Fibonacci data (custom scale behavior removed for compatibility)</div></div>
+            <div class="info-section"><h3>Description</h3><div class="description">Пример использования данных Fibonacci sequence для отображения на графике. Индексы Фибоначчи (0-10) по оси X, значения чисел Фибоначчи по оси Y.</div></div>
             <div class="info-section">
                 <h3>Parameters</h3>
                 <table class="params-table">
                     <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>width</td><td><code>window.innerWidth</code></td></tr>
-                    <tr><td>height</td><td><code>70vh</code></td></tr>
-                    <tr><td>behavior</td><td><code>FibonacciHorzScaleBehavior</code></td></tr>
+                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td></tr>
+                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td></tr>
+                    <tr><td>grid.vertLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td></tr>
+                    <tr><td>series.color</td><td><span class="color-swatch" style="background:#2962FF"></span><code>'#2962FF'</code></td></tr>
+                    <tr><td>series.lineWidth</td><td><code>2</code></td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description">Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55</div></div>
@@ -72,20 +75,10 @@
             const scriptEl = document.createElement('script');
             scriptEl.textContent = await response.text();
             document.head.appendChild(scriptEl);
-            const { createChartEx, LineSeries } = window.LightweightCharts;
-            class FibonacciHorzScaleBehavior {
-                constructor() { this._spacing = 50; }
-                options() { return { from: 0, to: 13 }; }
-                createConverterToInternalObj() { return time => time; }
-                createConverterFromInternalObj() { return index => index; }
-                formatLabel(scaleService, timestamp) {
-                    const fib = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233];
-                    return fib[Math.round(timestamp)] || timestamp.toString();
-                }
-                fillDatesForRange() { return []; }
-            }
-            const chart = createChartEx(document.getElementById('container'), new FibonacciHorzScaleBehavior(), {
+            const { createChart, LineSeries } = window.LightweightCharts;
+            const chart = createChart(document.getElementById('container'), {
                 layout: { background: { type: 'solid', color: '#131722' }, textColor: '#d1d4dc' },
+                grid: { vertLines: { color: '#1e222d' }, horzLines: { color: '#1e222d' } },
                 width: window.innerWidth, height: window.innerHeight * 0.7,
             });
             const series = chart.addSeries(LineSeries, { color: '#2962FF', lineWidth: 2 });
@@ -98,7 +91,7 @@
             series.setData(data);
             chart.timeScale().fitContent();
             const debugEl = document.getElementById('debugData');
-            debugEl.innerHTML = '<span class="key">count:</span> <span class="num">' + data.length + '</span>\n<span class="key">scale:</span> <span class="num">Fibonacci 0-13</span>\n<span class="key">labels:</span> <span class="num">' + data.map(d => d.value).join(', ') + '</span>';
+            debugEl.innerHTML = '<span class="key">count:</span> <span class="num">' + data.length + '</span>\n<span class="key">fib_values:</span> <span class="num">' + data.map(d => d.value).join(', ') + '</span>\n<span class="key">max_value:</span> <span class="num">' + Math.max(...data.map(d => d.value)) + '</span>';
             window.addEventListener('resize', () => { chart.applyOptions({ width: window.innerWidth, height: window.innerHeight * 0.7 }); });
         })();
     </script>
