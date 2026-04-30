@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -52,16 +53,18 @@
         <button class="info-toggle" onclick="togglePanel()">INFO</button>
         <div class="info-content">
             <div class="info-section"><h3>Series Type</h3><a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#baselineseries" target="_blank">BaselineSeries</a></div>
-            <div class="info-section"><h3>Description</h3><div class="description">График с базовой линией. Области выше и ниже базовой линии заливаются разными цветами.</div></div>
+            <div class="info-section"><h3>Description</h3><div class="description">График с базовой линией. Области выше и ниже базовой линии заливаются разными цветами. Удобен для отображения отклонений от среднего значения.</div></div>
             <div class="info-section">
                 <h3>Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>baseValue.price</td><td><code>50000</code></td></tr>
-                    <tr><td>topLineColor</td><td><span class="color-swatch" style="background:rgba(38,166,154,1)"></span><code>'rgba(38, 166, 154, 1)'</code></td></tr>
-                    <tr><td>bottomLineColor</td><td><span class="color-swatch" style="background:rgba(239,83,80,1)"></span><code>'rgba(239, 83, 80, 1)'</code></td></tr>
-                    <tr><td>topFillColor1</td><td><span class="color-swatch" style="background:rgba(38,166,154,0.28)"></span><code>'rgba(38, 166, 154, 0.28)'</code></td></tr>
-                    <tr><td>bottomFillColor1</td><td><span class="color-swatch" style="background:rgba(239,83,80,0.05)"></span><code>'rgba(239, 83, 80, 0.05)'</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>baseValue.price</td><td><code>50000</code></td><td>Базовая линия (центр) по оси Y. Значения выше — заливка topColor, ниже — bottomColor</td></tr>
+                    <tr><td>topLineColor</td><td><span class="color-swatch" style="background:rgba(38,166,154,1)"></span><code>'rgba(38, 166, 154, 1)'</code></td><td>Цвет верхней линии-маркера. Видна только если значение выходит за topFillColor2</td></tr>
+                    <tr><td>bottomLineColor</td><td><span class="color-swatch" style="background:rgba(239,83,80,1)"></span><code>'rgba(239, 83, 80, 1)'</code></td><td>Цвет нижней линии-маркера. На графике не отображается, служит для отладки</td></tr>
+                    <tr><td>topFillColor1</td><td><span class="color-swatch" style="background:rgba(38,166,154,0.28)"></span><code>'rgba(38, 166, 154, 0.28)'</code></td><td>Первый слой градиента заливки области выше базовой линии (более насыщенный)</td></tr>
+                    <tr><td>topFillColor2</td><td><span class="color-swatch" style="background:rgba(38,166,154,0.05)"></span><code>'rgba(38, 166, 154, 0.05)'</code></td><td>Второй слой градиента заливки области выше базовой линии (более прозрачный)</td></tr>
+                    <tr><td>bottomFillColor1</td><td><span class="color-swatch" style="background:rgba(239,83,80,0.05)"></span><code>'rgba(239, 83, 80, 0.05)'</code></td><td>Первый слой градиента заливки области ниже базовой линии (более прозрачный)</td></tr>
+                    <tr><td>bottomFillColor2</td><td><span class="color-swatch" style="background:rgba(239,83,80,0.28)"></span><code>'rgba(239, 83, 80, 0.28)'</code></td><td>Второй слой градиента заливки области ниже базовой линии (более насыщенный)</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT Close Price 1h, 100 candles</div></div>

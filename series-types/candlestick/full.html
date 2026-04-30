@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -52,16 +53,16 @@
         <button class="info-toggle" onclick="togglePanel()">INFO</button>
         <div class="info-content">
             <div class="info-section"><h3>Series Type</h3><a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#candlestickseries" target="_blank">CandlestickSeries</a></div>
-            <div class="info-section"><h3>Description</h3><div class="description">Японские свечи (OHLC). Отображают цену открытия, максимум, минимум и закрытие для каждого периода.</div></div>
+            <div class="info-section"><h3>Description</h3><div class="description">Японские свечи (OHLC). Отображают цену открытия, максимум, минимум и закрытие для каждого периода. Цвет свечи зависит от направления движения цены.</div></div>
             <div class="info-section">
                 <h3>Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>upColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td></tr>
-                    <tr><td>downColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td></tr>
-                    <tr><td>borderVisible</td><td><code>false</code></td></tr>
-                    <tr><td>wickUpColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td></tr>
-                    <tr><td>wickDownColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>upColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td><td>Цвет свечи когда close > open (бычья свеча, цена выросла)</td></tr>
+                    <tr><td>downColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td><td>Цвет свечи когда close < open (медвежья свеча, цена упала)</td></tr>
+                    <tr><td>borderVisible</td><td><code>false</code></td><td>Убрать границы тела свечи (верхняя и нижняя линии). Чистый вид без контуров</td></tr>
+                    <tr><td>wickUpColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td><td>Цвет фитиля (тени) верхней части бычьей свечи</td></tr>
+                    <tr><td>wickDownColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td><td>Цвет фитиля (тени) нижней части медвежьей свечи</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT 1h, 100 candles</div></div>

@@ -64,6 +64,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .data-source { font-size: 13px; }
         .data-source .symbol { color: #26a69a; font-weight: 600; }
@@ -100,13 +101,24 @@
             <div class="info-section">
                 <h3>Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td></tr>
-                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td></tr>
-                    <tr><td>grid.vertLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td></tr>
-                    <tr><td>grid.horzLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td></tr>
-                    <tr><td>series.upColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td></tr>
-                    <tr><td>series.downColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td><td>Цвет фона графика. Тёмно-синий (primary dark theme)</td></tr>
+                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td><td>Цвет текста на графике (подписи осей, легенда)</td></tr>
+                    <tr><td>grid.vertLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td><td>Цвет вертикальных линий сетки (менее контрастный, фоновый)</td></tr>
+                    <tr><td>grid.horzLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td><td>Цвет горизонтальных линий сетки (менее контрастный, фоновый)</td></tr>
+                    <tr><td>width</td><td><code>window.innerWidth</code></td><td>Ширина графика = ширина окна браузера</td></tr>
+                    <tr><td>height</td><td><code>70vh</code></td><td>Высота графика = 70% от высоты окна (30%留给 info panel)</td></tr>
+                </table>
+            </div>
+            <div class="info-section">
+                <h3>Series Parameters</h3>
+                <table class="params-table">
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>upColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td><td>Цвет бычьей свечи (close > open)</td></tr>
+                    <tr><td>downColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td><td>Цвет медвежьей свечи (close < open)</td></tr>
+                    <tr><td>borderVisible</td><td><code>false</code></td><td>Убрать границы тела свечи для чистого вида</td></tr>
+                    <tr><td>wickUpColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td><td>Цвет фитиля верхней части бычьей свечи</td></tr>
+                    <tr><td>wickDownColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td><td>Цвет фитиля нижней части медвежьей свечи</td></tr>
                 </table>
             </div>
             <div class="info-section">

@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -51,14 +52,25 @@
         <button class="info-toggle" onclick="togglePanel()">INFO</button>
         <div class="info-content">
             <div class="info-section"><h3>Method</h3><a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#createoptionschart" target="_blank">createOptionsChart()</a></div>
-            <div class="info-section"><h3>Description</h3><div class="description">График для опционов и цепных таблиц (option chains). Горизонтальная шкала — Price (числовая).</div></div>
+            <div class="info-section"><h3>Description</h3><div class="description">График для опционов и цепных таблиц (option chains). Горизонтальная шкала — Price (числовая). X-ось = цена (страйк). Используется для распределений цен и probability modeling.</div></div>
             <div class="info-section">
                 <h3>Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td></tr>
-                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td></tr>
-                    <tr><td>series.color</td><td><span class="color-swatch" style="background:#2962FF"></span><code>'#2962FF'</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td><td>Цвет фона графика</td></tr>
+                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td><td>Цвет текста на графике</td></tr>
+                    <tr><td>series.color</td><td><span class="color-swatch" style="background:#2962FF"></span><code>'#2962FF'</code></td><td>Цвет линии на графике</td></tr>
+                    <tr><td>series.lineWidth</td><td><code>2</code></td><td>Толщина линии</td></tr>
+                    <tr><td>width</td><td><code>window.innerWidth</code></td><td>Ширина графика = ширина окна</td></tr>
+                    <tr><td>height</td><td><code>70vh</code></td><td>Высота графика = 70% от высоты окна</td></tr>
+                </table>
+            </div>
+            <div class="info-section"><h3>Options Chart Specific</h3>
+                <table class="params-table">
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>X-axis scale</td><td>Price levels</td><td>Горизонтальная ось — числовые значения цен (страйки)</td></tr>
+                    <tr><td>Y-axis scale</td><td>Implied Volatility</td><td>Вертикальная ось — подразумеваемая волатильность (%)</td></tr>
+                    <tr><td>Data shape</td><td>Sin-based curve</td><td>Синтетические данные имитируют typical option chain</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description">Synthetic option chain data: price curve (sin-based simulation)</div></div>

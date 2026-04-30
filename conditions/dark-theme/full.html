@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -55,16 +56,24 @@
             <div class="info-section">
                 <h3>Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td></tr>
-                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td></tr>
-                    <tr><td>grid.vertLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td></tr>
-                    <tr><td>grid.horzLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td></tr>
-                    <tr><td>crosshair.vertLine.color</td><td><span class="color-swatch" style="background:#787b86"></span><code>'#787b86'</code></td></tr>
-                    <tr><td>crosshair.horzLine.color</td><td><span class="color-swatch" style="background:#787b86"></span><code>'#787b86'</code></td></tr>
-                    <tr><td>series.lineColor</td><td><span class="color-swatch" style="background:#2962FF"></span><code>'#2962FF'</code></td></tr>
-                    <tr><td>series.topColor</td><td><span class="color-swatch" style="background:rgba(41,98,255,0.28)"></span><code>'rgba(41, 98, 255, 0.28)'</code></td></tr>
-                    <tr><td>series.bottomColor</td><td><span class="color-swatch" style="background:rgba(41,98,255,0.05)"></span><code>'rgba(41, 98, 255, 0.05)'</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td><td>Цвет фона графика (тёмно-синий, основной цвет темы)</td></tr>
+                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td><td>Цвет текста на графике (светло-серый)</td></tr>
+                    <tr><td>grid.vertLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td><td>Цвет вертикальных линий сетки (едва заметный)</td></tr>
+                    <tr><td>grid.horzLines.color</td><td><span class="color-swatch" style="background:#1e222d"></span><code>'#1e222d'</code></td><td>Цвет горизонтальных линий сетки (едва заметный)</td></tr>
+                    <tr><td>crosshair.vertLine.color</td><td><span class="color-swatch" style="background:#787b86"></span><code>'#787b86'</code></td><td>Цвет вертикальной линии перекрестия (серый)</td></tr>
+                    <tr><td>crosshair.horzLine.color</td><td><span class="color-swatch" style="background:#787b86"></span><code>'#787b86'</code></td><td>Цвет горизонтальной линии перекрестия (серый)</td></tr>
+                    <tr><td>crosshair.vertLine.labelBackgroundColor</td><td><span class="color-swatch" style="background:#2962ff"></span><code>'#2962ff'</code></td><td>Цвет фона подписи вертикальной линии (синий)</td></tr>
+                    <tr><td>crosshair.horzLine.labelBackgroundColor</td><td><span class="color-swatch" style="background:#2962ff"></span><code>'#2962ff'</code></td><td>Цвет фона подписи горизонтальной линии (синий)</td></tr>
+                </table>
+            </div>
+            <div class="info-section">
+                <h3>Series Parameters</h3>
+                <table class="params-table">
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>lineColor</td><td><span class="color-swatch" style="background:#2962FF"></span><code>'#2962FF'</code></td><td>Цвет линии AreaSeries</td></tr>
+                    <tr><td>topColor</td><td><span class="color-swatch" style="background:rgba(41,98,255,0.28)"></span><code>'rgba(41, 98, 255, 0.28)'</code></td><td>Цвет заливки вверху области (полупрозрачный синий)</td></tr>
+                    <tr><td>bottomColor</td><td><span class="color-swatch" style="background:rgba(41,98,255,0.05)"></span><code>'rgba(41, 98, 255, 0.05)'</code></td><td>Цвет заливки внизу области (почти прозрачный)</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT Close Price 1h, 100 candles</div></div>

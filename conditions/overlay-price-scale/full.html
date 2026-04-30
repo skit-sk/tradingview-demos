@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -55,25 +56,26 @@
             <div class="info-section">
                 <h3>Series</h3>
                 <table class="params-table">
-                    <tr><th>Series</th><th>Type</th><th>Price Scale</th></tr>
-                    <tr><td>1</td><td><code>CandlestickSeries</code></td><td>default</td></tr>
-                    <tr><td>2</td><td><code>HistogramSeries</code></td><td><code>'overlay'</code></td></tr>
+                    <tr><th>Series</th><th>Type</th><th>Price Scale</th><th>Description</th></tr>
+                    <tr><td>1</td><td><code>CandlestickSeries</code></td><td>default</td><td>Цена BTCUSDT на основной шкале</td></tr>
+                    <tr><td>2</td><td><code>HistogramSeries</code></td><td><code>'overlay'</code></td><td>Volume на overlay шкале (верхние 20%)</td></tr>
                 </table>
             </div>
             <div class="info-section">
                 <h3>Colors</h3>
                 <table class="params-table">
-                    <tr><th>Series</th><th>Up Color</th><th>Down Color</th></tr>
-                    <tr><td>CandlestickSeries</td><td><span class="color-swatch" style="background:#26a69a"></span>#26a69a</td><td><span class="color-swatch" style="background:#ef5350"></span>#ef5350</td></tr>
-                    <tr><td>HistogramSeries (up)</td><td><span class="color-swatch" style="background:rgba(38,166,154,0.5)"></span>rgba(38,166,154,0.5)</td><td><span class="color-swatch" style="background:rgba(239,83,80,0.5)"></span>rgba(239,83,80,0.5)</td></tr>
+                    <tr><th>Series</th><th>Up Color</th><th>Down Color</th><th>Description</th></tr>
+                    <tr><td>CandlestickSeries</td><td><span class="color-swatch" style="background:#26a69a"></span>#26a69a</td><td><span class="color-swatch" style="background:#ef5350"></span>#ef5350</td><td>Цвета свечей</td></tr>
+                    <tr><td>HistogramSeries (up)</td><td><span class="color-swatch" style="background:rgba(38,166,154,0.5)"></span>rgba(38,166,154,0.5)</td><td></td><td>Объём при росте цены (полупрозрачный зелёный)</td></tr>
+                    <tr><td>HistogramSeries (down)</td><td></td><td><span class="color-swatch" style="background:rgba(239,83,80,0.5)"></span>rgba(239,83,80,0.5)</td><td>Объём при падении цены (полупрозрачный красный)</td></tr>
                 </table>
             </div>
             <div class="info-section">
                 <h3>Overlay Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>volumeSeries.priceScale().scaleMargins.top</td><td><code>0.8</code></td></tr>
-                    <tr><td>volumeSeries.priceScale().scaleMargins.bottom</td><td><code>0</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>volumeSeries.priceScale().scaleMargins.top</td><td><code>0.8</code></td><td>Верхняя граница overlay шкалы (80% от верха)</td></tr>
+                    <tr><td>volumeSeries.priceScale().scaleMargins.bottom</td><td><code>0</code></td><td>Нижняя граница overlay шкалы (0% = начинается от верха)</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT 1h, 100 candles</div></div>

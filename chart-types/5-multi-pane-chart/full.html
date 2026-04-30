@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -52,23 +53,37 @@
         <button class="info-toggle" onclick="togglePanel()">INFO</button>
         <div class="info-content">
             <div class="info-section"><h3>Method</h3><a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#createchart" target="_blank">createChart()</a> + <a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#chart-addpane" target="_blank">addPane()</a></div>
-            <div class="info-section"><h3>Description</h3><div class="description">График с несколькими панелями (мультипанельный). Верхняя панель — свечи BTCUSDT, нижняя — Volume гистограмма.</div></div>
+            <div class="info-section"><h3>Description</h3><div class="description">График с несколькими панелями (мультипанельный). Верхняя панель — свечи BTCUSDT, нижняя — Volume гистограмма. API добавлен в v5.0.</div></div>
             <div class="info-section">
-                <h3>Parameters</h3>
+                <h3>Chart Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>addDefaultPane</td><td><code>false</code></td></tr>
-                    <tr><td>pane 1 (main)</td><td><code>CandlestickSeries</code></td></tr>
-                    <tr><td>pane 2 (volume)</td><td><code>HistogramSeries</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>addDefaultPane</td><td><code>false</code></td><td>Отключить создание панели по умолчанию (создаём свои)</td></tr>
+                    <tr><td>width</td><td><code>window.innerWidth</code></td><td>Ширина графика</td></tr>
+                    <tr><td>height</td><td><code>70vh</code></td><td>Высота графика (70% окна)</td></tr>
+                    <tr><td>layout.background</td><td><span class="color-swatch" style="background:#131722"></span><code>'#131722'</code></td><td>Цвет фона</td></tr>
+                    <tr><td>layout.textColor</td><td><span class="color-swatch" style="background:#d1d4dc"></span><code>'#d1d4dc'</code></td><td>Цвет текста</td></tr>
                 </table>
             </div>
-            <div class="info-section"><h3>Series Colors</h3>
+            <div class="info-section">
+                <h3>Pane Configuration</h3>
                 <table class="params-table">
-                    <tr><th>Series</th><th>Color</th></tr>
-                    <tr><td>CandlestickSeries.upColor</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td></tr>
-                    <tr><td>CandlestickSeries.downColor</td><td><span class="color-swatch" style="background:#ef5350"></span><code>'#ef5350'</code></td></tr>
-                    <tr><td>HistogramSeries (up)</td><td><span class="color-swatch" style="background:rgba(38,166,154,0.5)"></span><code>'rgba(38, 166, 154, 0.5)'</code></td></tr>
-                    <tr><td>HistogramSeries (down)</td><td><span class="color-swatch" style="background:rgba(239,83,80,0.5)"></span><code>'rgba(239, 83, 80, 0.5)'</code></td></tr>
+                    <tr><th>Pane</th><th>Type</th><th>Data</th><th>Description</th></tr>
+                    <tr><td>Pane 1</td><td><code>CandlestickSeries</code></td><td>BTCUSDT OHLC</td><td>Главная панель с японскими свечами</td></tr>
+                    <tr><td>Pane 2</td><td><code>HistogramSeries</code></td><td>Volume</td><td>Дополнительная панель с объёмами</td></tr>
+                </table>
+            </div>
+            <div class="info-section">
+                <h3>Series Colors</h3>
+                <table class="params-table">
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>CandlestickSeries.upColor</td><td><span class="color-swatch" style="background:#26a69a"></span>#26a69a</td><td>Цвет бычьей свечи</td></tr>
+                    <tr><td>CandlestickSeries.downColor</td><td><span class="color-swatch" style="background:#ef5350"></span>#ef5350</td><td>Цвет медвежьей свечи</td></tr>
+                    <tr><td>CandlestickSeries.borderVisible</td><td><code>false</code></td><td>Убрать границы тела свечи</td></tr>
+                    <tr><td>CandlestickSeries.wickUpColor</td><td><span class="color-swatch" style="background:#26a69a"></span>#26a69a</td><td>Цвет фитиля вверх</td></tr>
+                    <tr><td>CandlestickSeries.wickDownColor</td><td><span class="color-swatch" style="background:#ef5350"></span>#ef5350</td><td>Цвет фитиля вниз</td></tr>
+                    <tr><td>HistogramSeries.up color</td><td><span class="color-swatch" style="background:rgba(38,166,154,0.5)"></span>rgba(38,166,154,0.5)</td><td>Объём при росте цены</td></tr>
+                    <tr><td>HistogramSeries.down color</td><td><span class="color-swatch" style="background:rgba(239,83,80,0.5)"></span>rgba(239,83,80,0.5)</td><td>Объём при падении цены</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT 1h, 100 candles</div></div>

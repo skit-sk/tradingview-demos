@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -51,14 +52,22 @@
     <div class="info-panel" id="infoPanel">
         <button class="info-toggle" onclick="togglePanel()">INFO</button>
         <div class="info-content">
-            <div class="info-section"><h3>Configuration</h3><div class="description">Несколько серий на одном графике. Candlestick + 2 Moving Averages (MA20, MA50).</div></div>
+            <div class="info-section"><h3>Configuration</h3><div class="description">Несколько серий на одном графике. Candlestick + 2 Moving Averages (MA20, MA50). MA рассчитываются на клиенте из исторических данных.</div></div>
             <div class="info-section">
                 <h3>Series</h3>
                 <table class="params-table">
-                    <tr><th>#</th><th>Type</th><th>Color</th></tr>
-                    <tr><td>1</td><td><code>CandlestickSeries</code></td><td><span class="color-swatch" style="background:#26a69a"></span>up / <span class="color-swatch" style="background:#ef5350"></span>down</td></tr>
-                    <tr><td>2</td><td><code>LineSeries</code></td><td><span class="color-swatch" style="background:#2962FF"></span>#2962FF (MA20)</td></tr>
-                    <tr><td>3</td><td><code>LineSeries</code></td><td><span class="color-swatch" style="background:#ef5350"></span>#ef5350 (MA50)</td></tr>
+                    <tr><th>#</th><th>Type</th><th>Color</th><th>Description</th></tr>
+                    <tr><td>1</td><td><code>CandlestickSeries</code></td><td><span class="color-swatch" style="background:#26a69a"></span>up / <span class="color-swatch" style="background:#ef5350"></span>down</td><td>Японские свечи BTCUSDT OHLC</td></tr>
+                    <tr><td>2</td><td><code>LineSeries</code></td><td><span class="color-swatch" style="background:#2962FF"></span>#2962FF</td><td>MA20 (20-периодная скользящая средняя)</td></tr>
+                    <tr><td>3</td><td><code>LineSeries</code></td><td><span class="color-swatch" style="background:#ef5350"></span>#ef5350</td><td>MA50 (50-периодная скользящая средняя)</td></tr>
+                </table>
+            </div>
+            <div class="info-section">
+                <h3>Moving Average Calculation</h3>
+                <table class="params-table">
+                    <tr><th>MA</th><th>Formula</th><th>Description</th></tr>
+                    <tr><td>MA20</td><td>sum(last 20 closes) / 20</td><td>Краткосрочный тренд (чувствительна)</td></tr>
+                    <tr><td>MA50</td><td>sum(last 50 closes) / 50</td><td>Долгосрочный тренд (менее чувствительна)</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT 1h, 100 candles</div></div>

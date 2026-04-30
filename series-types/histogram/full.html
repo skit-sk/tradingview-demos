@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', sans-serif; background: #131722; color: #d1d4dc; height: 100vh; display: flex; flex-direction: column; }
-        .header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #1e222d; border-bottom: 1px solid #2a2e39; }
+        .header { display: flex; align-items; center; justify-content: space-between; padding: 12px 20px; background: #1e222d; border-bottom: 1px solid #2a2e39; }
         .header-left { display: flex; align-items: center; gap: 16px; }
         .back-link { color: #2962ff; text-decoration: none; font-size: 14px; }
         .back-link:hover { text-decoration: underline; }
@@ -32,6 +32,7 @@
         .params-table th, .params-table td { text-align: left; padding: 6px 10px; border: 1px solid #2a2e39; }
         .params-table th { background: #2a2e39; color: #787b86; font-weight: normal; }
         .params-table td code { font-family: monospace; }
+        .params-table td:nth-child(3) { color: #9aa1a9; font-size: 12px; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; border: 1px solid #3a3e4a; }
         .debug-data { font-family: monospace; font-size: 12px; background: #131722; padding: 12px; border-radius: 4px; white-space: pre-wrap; color: #0f0; }
         .debug-data .key { color: #2962ff; }
@@ -52,13 +53,21 @@
         <button class="info-toggle" onclick="togglePanel()">INFO</button>
         <div class="info-content">
             <div class="info-section"><h3>Series Type</h3><a class="method-link" href="https://tradingview.github.io/lightweight-charts/docs/api#histogramseries" target="_blank">HistogramSeries</a></div>
-            <div class="info-section"><h3>Description</h3><div class="description">Гистограмма. Используется для отображения объёмов (Volume). Каждый столбец может иметь свой цвет.</div></div>
+            <div class="info-section"><h3>Description</h3><div class="description">Гистограмма. Используется для отображения объёмов (Volume), распределений, частотных данных. Каждый столбец может иметь свой цвет (например, зелёный для восходящих, красный для нисходящих).</div></div>
             <div class="info-section">
                 <h3>Parameters</h3>
                 <table class="params-table">
-                    <tr><th>Parameter</th><th>Value</th></tr>
-                    <tr><td>color (default)</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td></tr>
-                    <tr><td>base</td><td><code>0</code></td></tr>
+                    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+                    <tr><td>color (default)</td><td><span class="color-swatch" style="background:#26a69a"></span><code>'#26a69a'</code></td><td>Цвет по умолчанию для всех столбцов. Переопределяется в данных для отдельных столбцов</td></tr>
+                    <tr><td>base</td><td><code>0</code></td><td>Базовая линия от которой откладываются столбцы.柱 выше или ниже в зависимости от значения</td></tr>
+                    <tr><td>priceFormat.type</td><td><code>'volume'</code></td><td>Формат отображения цены (volume добавляет суффиксы K, M, B)</td></tr>
+                </table>
+            </div>
+            <div class="info-section"><h3>Per-Bar Colors</h3>
+                <table class="params-table">
+                    <tr><th>Condition</th><th>Color</th><th>Description</th></tr>
+                    <tr><td>close >= open</td><td><span class="color-swatch" style="background:#26a69a"></span>#26a69a</td><td>Зелёный — объём при росте цены (бычий объём)</td></tr>
+                    <tr><td>close < open</td><td><span class="color-swatch" style="background:#ef5350"></span>#ef5350</td><td>Красный — объём при падении цены (медвежий объём)</td></tr>
                 </table>
             </div>
             <div class="info-section"><h3>Data Source</h3><div class="description"><span style="color:#26a69a">Binance</span> — BTC/USDT Volume 1h, 100 candles</div></div>
