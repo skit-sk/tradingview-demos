@@ -1,5 +1,36 @@
 # Changelog — TradingView Demos
 
+## v3.1.0 (2026-05-01 17:00 MSK) — TradingView JS embed method
+
+### Изменение: все iframe-виджеты переведены на TradingView JS embed
+
+Вместо прямых `<iframe src="...">` используется официальный метод TradingView:
+```html
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+</div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-XXX.js" async>
+{ JSON config }
+</script>
+```
+
+Преимущества:
+- JS-скрипт автоматически создаёт iframe с правильной URL-кодировкой
+- Обработка CSP (fallback на `s.tradingview.com`)
+- Автоматический ресайз виджетов
+- Copyright-ссылка от TradingView
+- Нет проблем с `\"` / `%22` кодировкой
+
+### Web components (mini-chart, economic-map, economics)
+
+Оставлены как `<tv-minimal-chart>`, `<tv-economic-map>` — TradingView не поддерживает iframe для этих виджетов.
+
+### Прочее
+- Добавлен `viewport` meta tag во все страницы
+- Добавлен CSP-заголовок в `vercel.json` для `tradingview-widget.com` и `s.tradingview.com`
+
+---
+
 ## v3.0.0 (2026-05-01 16:45 MSK) — Breaking changes
 
 ### Breaking: изменены embed-widget типы TradingView
