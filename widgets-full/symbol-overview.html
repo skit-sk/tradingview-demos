@@ -7,7 +7,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #131722; height: 100vh; overflow: hidden; }
         .widget-wrapper { width: 100%; height: 100%; position: relative; }
-        .widget-fallback { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #888; font-family: -apple-system, sans-serif; }
+        .widget-fallback { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #888; font-family: -apple-system, sans-serif; z-index: 1; transition: opacity 0.3s; }
+        .widget-fallback.hidden { opacity: 0; pointer-events: none; }
         .spinner { width: 40px; height: 40px; border: 3px solid #333; border-top-color: #2962FF; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
@@ -26,8 +27,20 @@
         var container = document.getElementById('wrapper');
         var fallback = document.getElementById('fallback');
 
+        var config = {
+            "width": "100%",
+            "height": "100%",
+            "symbol": "BINANCE:BTCUSDT",
+            "colorTheme": "dark",
+            "isTransparent": false,
+            "autosize": true,
+            "dateRange": "1M",
+            "showVolume": true,
+            "showMA": true
+        };
+
         var iframe = document.createElement('iframe');
-        iframe.src = 'https://www.tradingview-widget.com/embed-widget/symbol-overview/?locale=en#' + encodeURIComponent({"symbol": "BINANCE:BTCUSDT", "width": "100%", "height": "100%", "locale": "en", "colorTheme": "dark", "isTransparent": false, "autosize": true, "dateRange": "1M", "showVolume": true, "showMA": true});
+        iframe.src = 'https://www.tradingview-widget.com/embed-widget/symbol-overview/?locale=en#' + encodeURIComponent(JSON.stringify(config));
 
         iframe.style.width = '100%';
         iframe.style.height = '100%';
@@ -38,20 +51,17 @@
         iframe.setAttribute('title', 'Symbol Overview TradingView widget');
 
         iframe.onload = function() {
-            fallback.style.display = 'none';
+            fallback.classList.add('hidden');
+            setTimeout(function() {
+                fallback.style.display = 'none';
+            }, 300);
         };
 
         iframe.onerror = function() {
-            fallback.innerHTML = '<p style="color:#ef5350;">Failed to load widget</p>';
+            fallback.innerHTML = '<p style="color:#ef5350;">Failed to load widget</p><button onclick="location.reload()" style="margin-top:10px;padding:8px 16px;cursor:pointer;">Retry</button>';
         };
 
         container.appendChild(iframe);
-
-        setTimeout(function() {
-            if (fallback.style.display !== 'none') {
-                fallback.innerHTML = '<p style="color:#ffa500;">Widget taking long time to load...</p>';
-            }
-        }, 15000);
     }
 
     if (document.readyState === 'loading') {
