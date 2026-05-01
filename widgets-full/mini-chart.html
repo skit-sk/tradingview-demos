@@ -6,17 +6,12 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #131722; height: 100vh; overflow: hidden; }
-        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
-<iframe
-    id="widget"
-    src="https://www.tradingview-widget.com/embed-widget/mini-chart/?locale=en#%7B%22symbol%22%3A%22BINANCE%3ABTCUSDT%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A%22100%25%22%2C%22colorTheme%22%3A%22dark%22%2C%22locale%22%3A%22en%22%2C%22autosize%22%3Atrue%2C%22utm_source%22%3A%22tradingview-demos-sk.vercel.app%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22mini-chart%22%7D"
-    frameborder="0"
-    scrolling="no"
-    allowtransparency="true"
-    title="Mini Chart">
-</iframe>
+<div class="tradingview-widget-container" style="height:100%;width:100%">
+    <tv-mini-chart symbol="BINANCE:BTCUSDT" colorTheme="dark" locale="en"></tv-mini-chart>
+</div>
+<script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-mini-chart.js"></script>
 </body>
 </html>
