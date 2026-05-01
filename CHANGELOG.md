@@ -1,5 +1,42 @@
 # Changelog — TradingView Demos
 
+## v3.1.1 (2026-05-01 18:00 MSK) — TradingView JS embed with fallback
+
+### Критическое изменение: обход блокировки www.tradingview-widget.com
+
+Прямые `<iframe src="https://www.tradingview-widget.com/...">` не работают в РФ —
+домен заблокирован, браузер выдаёт `ERR_CONNECTION_RESET`.
+
+TradingView JS embed загружает скрипты с `s3.tradingview.com` и создаёт iframe
+динамически. При блокировке основного домена, JS автоматически подменяет
+`www.tradingview-widget.com` на `s.tradingview.com` (функция `_tryFixCSPIssueWithFallback`).
+
+### Формат iframe-виджетов (29 шт.)
+
+```html
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+</div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-XXX.js" async>
+{ JSON config }
+</script>
+```
+
+### Формат web component виджетов (3 шт.)
+
+```html
+<div class="tradingview-widget-container">
+  <tv-mini-chart symbol="BINANCE:BTCUSDT" colorTheme="dark" locale="en" autosize></tv-mini-chart>
+</div>
+<script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-mini-chart.js"></script>
+```
+
+### Web component виджеты (без изменений)
+- mini-chart → `tv-mini-chart.js`
+- economic-map, economics → `tv-economic-map.js`
+
+---
+
 ## v3.0.2 (2026-05-01 17:30 MSK) — Removed CSP header
 
 ### Исправление
