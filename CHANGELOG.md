@@ -1,6 +1,23 @@
 # Changelog — TradingView Demos
 
-## v3.0.1 (2026-05-01 17:15 MSK) — Reverted to direct iframes + CSP
+## v3.0.2 (2026-05-01 17:30 MSK) — Removed CSP header
+
+### Исправление
+- Удалён CSP-заголовок из `vercel.json`, который блокировал виджеты
+  (`frame-src` не содержал `'self'` → локальные iframe-превью заблокированы;
+  `style-src` отсутствовал → inline CSS заблокирован)
+- Возврат к исходному `vercel.json` с только `X-Content-Type-Options: nosniff`
+
+---
+
+## v3.0.1 (2026-05-01 17:15 MSK) — Direct iframes + CSP headers (ОТМЕНЕНО)
+
+### Добавлено (ОТМЕНЕНО в v3.0.2)
+- CSP-заголовок в `vercel.json` → вызвал ERR_BLOCKED_BY_CSP у пользователей
+
+### Из v3.0.0 (сохранено)
+- Revert с TradingView JS embed на прямые iframes
+- Web components сохранены для mini-chart, economic-map, economics
 
 ### Откат с v3.1.0
 - Возвращены прямые `<iframe>` для всех 29 iframe-виджетов (JS embed метод рендерил

@@ -4,11 +4,7 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        {
-          "key": "Content-Security-Policy",
-          "value": "frame-src https://www.tradingview-widget.com https://s.tradingview.com https://widgets.tradingview-widget.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://s3.tradingview.com https://widgets.tradingview-widget.com; connect-src https://www.tradingview-widget.com https://s.tradingview.com https://widgets.tradingview-widget.com https://s3.tradingview.com"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
       ]
     }
   ],
