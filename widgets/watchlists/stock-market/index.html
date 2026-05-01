@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <title>Stock Market</title>
     <style>
-        body { margin: 0; padding: 0; background: #1a1a1a; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .preview { text-align: center; color: #888; font-family: -apple-system, sans-serif; }
-        .preview-icon { width: 40px; height: 40px; margin-bottom: 8px; opacity: 0.5; }
-        .preview-text { font-size: 12px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #1a1a1a; height: 100vh; }
+        .widget-iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
-    <div class="preview">
-        <svg class="preview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <path d="M3 9h18M9 21V9"/>
-        </svg>
-        <div class="preview-text">Stock Market<br>BMFBOVESPA</div>
-    </div>
+<iframe
+    id="widget-frame"
+    class="widget-iframe"
+    src="https://www.tradingview-widget.com/embed-widget/market-overview/?locale=en#%7B%22width%22%3A%22100%25%22%2C%22height%22%3A%22100%25%22%2C%22colorTheme%22%3A%22dark%22%2C%22locale%22%3A%22en%22%2C%22isTransparent%22%3Afalse%2C%22tabs%22%3A%5B%22stocks%22%5D%2C%22utm_source%22%3A%22tradingview-demos-sk.vercel.app%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22market-overview%22%2C%22page-uri%22%3A%22tradingview-demos-sk.vercel.app%2Fwidgets%2Fwatchlists%2Fstock-market%2Findex.html%22%7D"
+    scrolling="no"
+    allowtransparency="true"
+    frameborder="0"
+    loading="lazy">
+</iframe>
 </body>
 </html>
