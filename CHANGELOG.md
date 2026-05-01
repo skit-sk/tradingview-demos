@@ -1,6 +1,21 @@
 # Changelog — TradingView Demos
 
-## v3.1.0 (2026-05-01 17:00 MSK) — TradingView JS embed method
+## v3.0.1 (2026-05-01 17:15 MSK) — Reverted to direct iframes + CSP
+
+### Откат с v3.1.0
+- Возвращены прямые `<iframe>` для всех 29 iframe-виджетов (JS embed метод рендерил
+  корректно, но давал пустые скриншоты в headless-браузере)
+- Web components сохранены для mini-chart, economic-map, economics (нет iframe-альтернативы)
+- Добавлен CSP заголовок в `vercel.json` (frame-src, script-src, connect-src для TradingView доменов)
+
+### Из v3.0.0 (сохранено)
+- 6 исправленных embed-widget типов: crypto-coins-heatmap, screener, events, forex-heat-map, single-quote, hotlists
+- URL-кодировка `%22` во всех iframe URL
+- 24 SVG-заглушки заменены на реальные TradingView iframes в превью
+
+---
+
+## v3.1.0 (2026-05-01 17:00 MSK) — TradingView JS embed method (ОТМЕНЕНО)
 
 ### Изменение: все iframe-виджеты переведены на TradingView JS embed
 
