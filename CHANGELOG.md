@@ -1,5 +1,14 @@
 # Changelog — TradingView Demos
 
+## v3.1.2 (2026-05-04 16:00 MSK) — Standalone widget samples
+
+### Добавлено
+- `standalone-widgets/` — 10 автономных HTML-файлов для локального тестирования
+  Каждый файл открывается в браузере двойным кликом, без сервера.
+  Доступны на Vercel: `https://tradingview-demos-sk.vercel.app/standalone-widgets/`
+
+---
+
 ## v3.1.1 (2026-05-01 18:00 MSK) — TradingView JS embed with fallback
 
 ### Критическое изменение: обход блокировки www.tradingview-widget.com
